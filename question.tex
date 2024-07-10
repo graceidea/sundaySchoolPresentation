@@ -1,0 +1,380 @@
+%\documentclass{article}
+\documentclass[openany,hebrew,ctexart]{book}
+\usepackage{titletoc}
+%\documentclass{cej}
+\usepackage{fontspec}
+\usepackage{xeCJK} %调用 xeCJK 宏包
+%\setmainfont{BiauKai} %設定中文字型
+%\setCJKmainfont{SimSun} %设置 CJK 主字体为 SimSun （宋体）
+\setCJKmainfont{Noto Sans CJK TC}
+\usepackage{fancyhdr}
+%\usepackage{comment}
+\usepackage{forest}
+\usepackage{tabularx}
+\usepackage[paper=portrait,pagesize]{typearea}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{paracol}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{multirow}
+\usepackage{etoolbox}
+\usepackage{wrapfig,booktabs,threeparttable}
+%\usepackage[subpreambles]{standalone}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+%\pgfplotsset{
+ %   width=matrix\textwidth,
+%}
+\usepackage{tikz}
+\usetikzlibrary{snakes}
+\usetikzlibrary{shapes.geometric,shapes.arrows,decorations.pathmorphing}
+\usetikzlibrary{matrix,chains,scopes,positioning,arrows,fit,shapes.symbols}
+\usetikzlibrary{calc,trees,positioning,decorations.pathreplacing,shapes}
+\tikzset{
+>=stealth',
+  punktchain/.style={
+    rectangle, 
+    rounded corners, 
+    % fill=black!10,
+    draw=black, very thick,
+    text width=10em, 
+    minimum height=3em, 
+    text centered, 
+    on chain},
+  line/.style={draw, thick, <-},
+  element/.style={
+    tape,
+    top color=white,
+    bottom color=blue!50!black!60!,
+    minimum width=6em,
+    draw=blue!40!black!90, very thick,
+    text width=10em, 
+    minimum height=3.5em, 
+    text centered, 
+    on chain},
+  every join/.style={->, thick,shorten >=1pt},
+  decoration={brace},
+  tuborg/.style={decorate},
+  tubnode/.style={midway, right=2pt},
+}
+
+
+\newenvironment{changemargin}[2]{%
+\begin{list}{}{%
+\setlength{\topsep}{-2pt}%
+\setlength{\leftmargin}{20pt}%
+\setlength{\rightmargin}{20pt}%
+\setlength{\listparindent}{\parindent}%
+\setlength{\itemindent}{\parindent}%
+\setlength{\parsep}{\parskip}%
+}%
+\item[]}{\end{list}}
+
+
+\usepackage{color}
+
+\makeatother
+
+\usepackage{mathtools}
+
+\usepackage{tabularx}
+\parindent=0pt
+\defaultfontfeatures{Mapping=tex-text}
+%\setmainfont[Ligatures=TeX]{Arial}
+\usepackage[textwidth=16cm]{geometry}
+\setlength{\parindent}{0pt}
+
+
+\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+    text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+    text width=5em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+    minimum height=2em]
+
+
+\usepackage{amssymb}
+%\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+
+
+
+
+
+
+
+
+\DeclareCaptionLabelSeparator{emdash}{~--- }
+\captionsetup[figure]{labelsep=emdash,font=onehalfspacing,position=bottom}
+\captionsetup{%
+    singlelinecheck=off,
+    skip=2pt,
+    justification=centering,
+}
+
+%我们可以通过 setspace宏包提供的命令来调整行间距。比如在导言区添加如下内容，可以将行距设置为字号的 1.5 倍：
+\usepackage{setspace}
+\onehalfspacing
+ %在页眉左边写上我的名字，中间写上今天的日期，右边写上我的电话；页脚的正中写上页码；页眉和正文之间有一道宽为 0.4pt 的横线分割，可以在导言区加上如下几行
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+%\lhead{\author}
+%\lhead{\thepage}
+%\chead{\date}
+\chead{\thepage}
+\rhead{主日学}
+\lfoot{}
+%\cfoot{\thepage}
+\rfoot{}
+\renewcommand{\headrulewidth}{0.2pt}
+\renewcommand{\headwidth}{\textwidth}
+\renewcommand{\footrulewidth}{0pt}
+
+
+%\title{你好，world!}
+%\author{Liam}
+%\date{}
+
+
+%\renewcommand\thesection{\Roman{section}}
+%\renewcommand\thesubsection{\Alph{subsection}}
+
+\makeatletter
+% #1 - comparator
+% #2 - token list to sort
+\newcommand\sort[2]{%
+        \ifstrempty{#2}
+        {}% else
+        {%
+                \sort@begin#1{}#2\sort@s\sort@begin
+        }%
+}
+
+% helpers
+\def\sort@s{\sort@s}
+\def\ifsort@s#1{%
+        \ifx\sort@s#1%
+                \expandafter\@firstoftwo
+        \else
+                \expandafter\@secondoftwo
+        \fi
+}
+% #1 - comparator
+% #2 - tokens processed so far
+% #3 - smallest token so far
+% #4 - rest of the list
+\def\sort@begin#1#2#3#4\sort@begin{%
+        \ifsort@s{#4}
+        {%
+                \sortend{#3}%
+                \sort#1{#2}%
+        }% else
+        {%
+                \sort@go#1{#2}{#3}#4\sort@go
+        }%
+}
+
+%     #1 - comparator
+% #2 - tokens processed so far
+% #3 - smallest token so far
+% #4 - token under consideration
+% #5 - rest of the list
+\def\sort@go#1#2#3#4#5\sort@go{%
+        #1{#3}{#4}{\sort@output#1{#2}{#5}}%
+}
+% #1 - comparator
+% #2 - tokens processed so far
+% #3 - rest of the list
+% #4 - smaller of the two tokens
+% #5 - larger of the two tokens
+\def\sort@output#1#2#3#4#5{%
+        \ifsort@s{#3}
+        {%
+                \sortoutput{#4}%
+                \sort#1{#2{#5}}%
+        }% else
+        {%
+                \sort@begin#1{#2{#5}}{#4}#3\sort@begin
+        }%
+}
+
+\def\sort@numlt#1#2#3{%
+        \ifnumcomp{#1}<{#2}
+        {#3{#1}{#2}}% else
+        {#3{#2}{#1}}%
+}
+\def\sort@numgt#1#2#3{%
+        \ifnumcomp{#1}>{#2}
+        {#3{#1}{#2}}% else
+        {#3{#2}{#1}}%
+}
+
+\def\sort@alpha#1#2#3{%
+        \ifnumcomp{\pdfstrcmp{#1}{#2}}<{0}
+        {#3{#1}{#2}}% else
+        {#3{#2}{#1}}%
+}
+
+\def\sort@firstcol#1#2{%
+    \expandafter\expandafter\expandafter
+        \sort@fc@helper\expandafter#1#2#1#2%
+}
+
+\def\sort@fc@helper#1&#2\\#3&#4\\#5#6#7{%
+    \ifnumcomp{\pdfstrcmp{#1}{#3}}<{0}
+    {#7{#5}{#6}}% else
+    {#7{#6}{#5}}%
+}
+
+\newcommand*\sortnumlt{\sort\sort@numlt}
+\newcommand*\sortnumgt{\sort\sort@numgt}
+\newcommand*\sortalpha{\sort\sort@alpha}
+\newcommand*\sortfirstcol{\sort\sort@firstcol}
+\makeatother
+
+% Change these to change out the sort outputs.
+\newcommand*\sortoutput[1]{#1}
+\newcommand*\sortend[1]{#1}
+
+
+
+
+
+
+
+\KOMAoptions{paper=portrait,pagesize}
+\recalctypearea
+%设置页边距，推荐使用 geometry 宏包。可以在这里查看它的说明文档
+\usepackage{geometry}
+\geometry{papersize={17cm,15cm}}
+\geometry{left=1.5cm,right=2.cm,top=1.cm,bottom=1cm}
+%\usepackage[margin=0.5in]{geometry}
+\addtolength{\oddsidemargin}{-.15075in}
+\addtolength{\evensidemargin}{-.15075in}
+\addtolength{\textwidth}{0.75in}
+
+\addtolength{\topmargin}{0.275in}
+\addtolength{\textheight}{1.75in}
+\geometry{
+ a4paper,
+ total={190mm,257mm},
+ left=15mm,
+ top=20mm,
+ }
+ 
+ %4 level 
+\usepackage{titlesec}
+\setcounter{secnumdepth}{4}
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+ 
+\rfoot{Page \thepage \hspace{1pt} of \pageref{LastPage}} 
+
+\titlespacing{\section}{0.2pt}{\parskip}{-\parskip}
+\titlespacing{\subsection}{0.2pt}{\parskip}{-\parskip}
+\titlespacing{\subsubsection}{0.2pt}{\parskip}{-\parskip}
+
+%\titlespacing\section{0pt}{12pt plus 2pt minus 8pt}{0pt plus 2pt minus 8pt}
+\titlespacing\subsection{0pt}{12pt plus 2pt minus 8pt}{0pt plus 2pt minus 8pt}
+\titlespacing\subsubsection{0pt}{12pt plus 2pt minus 8pt}{0pt plus 2pt minus 8pt}
+
+\usepackage[toc,page]{appendix}
+\usepackage{caption}
+\usepackage{subcaption}
+%\usepackage{subfig}
+\usepackage{graphicx}
+\usepackage{smartdiagram}
+\usepackage{cjhebrew} 
+\usepackage{float}%table{H}
+
+
+\titleclass{\subsubsubsection}{straight}[\subsection]
+\newcounter{subsubsubsection}[subsubsection]
+\renewcommand\thesubsubsubsection{\thesubsubsection.\arabic{subsubsubsection}}
+\renewcommand\theparagraph{\thesubsubsubsection.\arabic{paragraph}} % optional; useful if paragraphs are to be numbered
+\titleformat{\subsubsubsection}
+  {\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
+\titlespacing*{\subsubsubsection}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{5}{\z@}%
+  {3.25ex \@plus1ex \@minus.2ex}%
+  {-1em}%
+{\normalfont\normalsize\bfseries}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{6}{\parindent}%
+  {3.25ex \@plus1ex \@minus .2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries}}
+\def\toclevel@subsubsubsection{4}
+\def\toclevel@paragraph{5}
+\def\toclevel@paragraph{6}
+\def\l@subsubsubsection{\@dottedtocline{4}{7em}{4em}}
+\def\l@paragraph{\@dottedtocline{5}{10em}{5em}}
+\def\l@subparagraph{\@dottedtocline{6}{14em}{6em}}
+\makeatother
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{3}
+\usepackage{verbatim}%\begin{document}\end{comment}
+\usepackage{colortbl}
+
+\usepackage{rotating}%sidewaystable}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Sharelatex Example},
+    bookmarks=true,
+    pdfpagemode=FullScreen,
+}
+\urlstyle{same}
+\colorlet{TEAL}{red}
+\begin{document}
+
+
+%============================================
+%    目錄,圖目錄,表目錄
+%============================================
+\renewcommand\contentsname{目錄}
+\renewcommand\listfigurename{圖目錄}
+\renewcommand\listtablename{表目錄}
+\tableofcontents
+\thispagestyle{empty}
+\listoffigures
+\thispagestyle{empty}
+\listoftables
+\thispagestyle{empty}
+
+\makeatletter
+\let\origsection\section
+\renewcommand\section{\@ifstar{\starsection}{\nostarsection}}
+\newcommand\nostarsection[1]
+{\sectionprelude\origsection{#1}\sectionpostlude}
+\newcommand\starsection[1]
+{\sectionprelude\origsection*{#1}\sectionpostlude}
+\newcommand\sectionprelude{%
+  \vspace{.5em}
+}
+\newcommand\sectionpostlude{%
+  \vspace{0em}
+}
+\makeatother
+
+
+
+
+
+
+%\tableofcontents
+\include{questions1}
+
+
+\end{document}
